@@ -1,0 +1,59 @@
+Loops
+for(var i=0; i<500; i++)
+{ }
+
+Assemble URL with Multiple variables
+BeginTransaction("RTPNullDiscountCode")
+wlHttp.Get("https://gdcomm.prod.phx3.gdg/PricingPOC/v1/privateLabel/" + privateLabelID + "/products/" + pf_id + "?membership=" + membership + "&shopperID=" + shopper_id + "&currency=" + currency + "&isc=" + isc + "&priceGroupID=" + priceGroupID + "&quantity=" + quantity);
+EndTransaction("RTPNullDiscountCode",WLSuccess,false)
+
+Filter URLs
+wlGlobals.FilterUrl = "wsimg.com;google.com"
+wlGlobals.FilterUrl = "http://dav7gcbuoinjg.cloudfront.net/javascripts/modal.js";
+
+Show Variable Value
+InfoMessage(i) - shown in IDE and Console
+DebugMessage(i) - shown only in IDE
+
+Extracting values
+wlHttp.SaveSource = true;
+wlHttp.Get("http://192.168.106.162/server-status")
+myTitle = extractValue("<title>", "<\/title>", document.wlSource, 1);
+myTitle = extractValue("<dt>", "<\/dt>", document.wlSource, 12);
+//will print the content of the title InfoMessage (myTitle );
+
+Selecting random sites
+HRC_13urls \\g1lwweb001\Software\WebLoadProjects\HRC
+
+Setting Host Headers
+wlGlobals.OverrideHostDefault = true;
+wsbhost = wlRand.Range(1,1000000);
+wlHttp.Header["Host"] = "wsb" + wsbhost + ".godaddysites.com";
+
+Setting Auth in Header (use ccokies)
+wlCookie.Set("auth_idp", "eyJhdXRoIjogImJhc2ljIiwgImZhY3RvcnMiOiB7ImtfcHciOiAxNDg0NjY3MTcxfSwgImZpcnN0bmFtZSI6IG51bGwsICJmdGMiOiAxLCAiaGJpIjogMTQ4NDY2NzE3MSwgImlhdCI6IDE0ODQ2NjcxNzEsICJqdGkiOiAiMTZUSHdiUEhFbmhxZlN1ZVRkSEhPQSIsICJsYXN0bmFtZSI6IG51bGwsICJwbGlkIjogIjEiLCAic2hvcHBlcklkIjogIjEzNDMyNDIiLCAidHlwIjogImlkcCIsICJ1c2VybmFtZSI6ICJiY2Fyc29uQGdvZGFkZHkuY29tIn0", "10.33.130.126", "/", "Wed, 17-Jan-17 17:29:00 GMT");
+
+Validate Response Size
+wlVerification.ContentLength( ">" , 100 , WLError );  //Fail if bytes < 100
+
+RandomSleep
+wlGlobals.SleepRandomMax = 5000
+wlGlobals.SleepRandomMin = 1000
+
+Setting the cookie
+wlCookie.Set(“UserID”, “zapd10”, “www.abcdef.net,”, “/”, “Sun, 19-Jun-2011 17:29:00 GMT”)
+
+Exclude Request (Hyfn.wlp)
+wlGlobals.FilterUrl = "http://dav7gcbuoinjg.cloudfront.net/javascripts/modal.js";
+
+Check Result
+wlHttp.SaveSource = true;
+
+Validate Response Size
+wlVerification.ContentLength( ">" , 100 , WLError );
+
+Using a Specific User Agent
+wlGlobals.UserAgent = "Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A405 Safari/8536.25"
+wlGlobals.UserAgent = "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.0; WOW64; Trident/5.0; BOIE9;ENUS)";
+
+wlGlobals.UserAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1309.0 Safari/537.17";

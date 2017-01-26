@@ -1,0 +1,110 @@
+function InitAgenda()
+{
+
+wlGlobals.SSLVersion="TLS_Version_1_0";
+wlGlobals.SSLUseSNI = true;
+CopyFile("GP-55.jpg","GP-55.jpg")  //File Upload "POST Documents"
+}
+
+wlHttp.ContentType = "application/json, text/json"
+wlCookie.Set("auth_idp", "eyJhbGciOiAiUlMyNTYiLCAia2lkIjogIllYZFg1eVE4OHcifQ.eyJhdXRoIjogImJhc2ljIiwgImZhY3RvcnMiOiB7ImtfcHciOiAxNDg1MjM0NTY4fSwgImZpcnN0bmFtZSI6ICJXU0IiLCAiZnRjIjogMSwgImhiaSI6IDE0ODUyMzQ1NjgsICJpYXQiOiAxNDg1MjM0NTY4LCAianRpIjogIm1TQUxjS1Y2WG40RzNzcjQxNUx5ZmciLCAibGFzdG5hbWUiOiAiQXV0byIsICJwbGlkIjogIjEiLCAic2hvcHBlcklkIjogIjEwNTY0MDUiLCAidHlwIjogImlkcCIsICJ1c2VybmFtZSI6ICJ3c2JhdXRvLTEwNTY0MDUifQ.TILo1e_LpJOg1iIVXHL4pWYL_w8ZptHOIvmM_HFtKJ0oK0I1PNPAzUWRx1xavWOkB0TpGBKe_UWMjYkqNf1fLPuDp-pfCjEvJyFwUpa8SM8yVCrLuhOrNwhYdm9mYHsjSZeGVAuFWYl8NeuF09oDvJDXRp57nEnIZ67_yMt6300", ".test-godaddy.com", "/", "Sat, 17-Jan-28 17:29:00 GMT");
+
+BeginTransaction("GET websites")
+wlHttp.Get("http://instantpage.api.test-godaddy.com/v2/websites")
+EndTransaction("GET websites",WLSuccess,false)
+
+BeginTransaction("GET documents")
+wlHttp.Get("http://instantpage.api.test-godaddy.com/v2/websites/ec6b5788-7d37-4b11-bdce-ca79b119f5b5/documents")
+EndTransaction("GET documents",WLSuccess,false)
+
+BeginTransaction("POST documents")
+wlHttp.Header["Origin"] = "https://instantpage.test-godaddy.com"
+wlHttp.Header["x-shopper-id"] = "1206690"
+wlHttp.Header["Referer"] = "https://instantpage.test-godaddy.com/en-US/editor/ec6b5788-7d37-4b11-bdce-ca79b119f5b5/42db7790-e4b4-44f0-8844-0157f329e78e/edit/0dadbb16-2e0c-4b16-94ec-50a3ecbc0f75/mutator/background/pick"
+wlHttp.EncodeFormdata = false; 
+wlHttp.ContentType = "multipart/form-data"
+wlHttp.FormData["file.wlFile-Name"] = "GP-55.jpg"
+wlHttp.FormData["file.wlContent-Type"] = "image/jpeg"
+wlCookie.Set("testShopperId1", "agyckgufuaegmigcpjgfujghrfohrdah", "instantpage.api.test-godaddy.com", "/", "", "");
+wlCookie.Set("tcc_refer", "refer_e_id=pandc.vnext.edit_widget_background.add_photo_button.click&refer_usrin=device%252Ctablet%255Evertical%252Cprofessional%255Eaccount_uid%252C6fd50973-6b02-11e6-83a7-005056953ce3", "instantpage.api.test-godaddy.com", "/", "", "");
+wlCookie.Set("last_five_searches", "", "instantpage.api.test-godaddy.com", "/", "", "");
+wlCookie.Set("traffic", "", "instantpage.api.test-godaddy.com", "/", "", "");
+wlHttp.Post("https://instantpage.api.test-godaddy.com/v2/websites/ec6b5788-7d37-4b11-bdce-ca79b119f5b5/documents")
+EndTransaction("POST documents",WLSuccess,false)
+
+BeginTransaction("POST publish")
+wlHttp.Post("http://instantpage.api.test-godaddy.com/v2/websites/ec6b5788-7d37-4b11-bdce-ca79b119f5b5/actions/publish")
+EndTransaction("POST publish",WLSuccess,false)
+
+putPayload = "{" +
+"\"id\": \"0f56d02e-a85d-4d10-908a-62646e09b906\"," +
+    "\"domainName\": \"newbakerythatworks.test.godaddysites.com\"," +
+    "\"accountId\": \"4a66f714-d8fd-11e6-8c3b-005056953ce3\"," +
+    "\"shopperId\": \"1056405\"," +
+    "\"resellerId\": 1," +
+    "\"homepageId\": \"c679226b-19e3-492c-9b1f-c9cb27e6c937\"," +
+    "\"createDate\": \"2017-01-17T22:40:53.597Z\"," +
+    "\"updateDate\": \"2017-01-23T00:26:11.640Z\"," +
+    "\"status\": \"active\"," +
+    "\"properties\": {" +
+     "\"address\": \"1020 Enterprise Way, 3rd Floor, Sunnyvale, CA 94089, US\"," +
+     "\"businessCategory\": \"bakeries\"," +
+      "\"businessName\": \"New Bakery that works\"," +
+      "\"colorPack\": \"007\"," +
+      "\"colorPackCategory\": \"primary\"," +
+      "\"dpsSubdomain\": \"newbakerythatworks.test.godaddysites.com\"," +
+      "\"email\": \"wsbauto-123@gmail.com\"," +
+      "\"firstPublishUtcDateTime\": \"2017-01-13T02:26:08.209Z\"," +
+      "\"fontPack\": \"sacramento\"," +
+      "\"lastPublishFailureUtcDateTime\": \"2017-01-19T23:44:12.259Z\"," +
+      "\"lastPublishSuccessUtcDateTime\": \"2017-01-23T00:26:11.634Z\"," +
+      "\"lat\": \"37.403991\"," +
+      "\"layout\": \"layout1\"," +
+      "\"lng\": \"-122.034985\"," +
+      "\"npsLastDismissed\": \"2017-01-13T02:27:02.586Z\"," +
+      "\"onboardingCompletedUtcDateTime\": \"2017-01-13T02:25:03.385Z\"," +
+      "\"phoneNumber\": \"(213) 123-1234\"," +
+      "\"theme\": \"4\"" +
+    "}," +
+    "\"options\": {" +
+      "\"npsComplete\": true" +
+    "}," +
+    "\"data\": {" +
+      "\"navigation\": [" +
+        "\"c679226b-19e3-492c-9b1f-c9cb27e6c937\"" +
+      "]," + 
+      "\"stockImages\": [" +
+        "{" +
+          "\"url\": \"//img1.wsimg.com/isteam/stock/76a0e556ed4df5c97146357060abad051e9e3fd52c30a0f7ff1a9f2befc509b9\"," +
+          "\"lastModified\": \"2017-01-13T02:24:55.014Z\"" +
+        "}," +
+        "{" +
+          "\"url\": \"///img1.wsimg.com//isteam//stock//45eb13d8cada5aec212ac4d314c820cf6813a4f3a435e18dab422e6cce9cc8e9\"," +
+          "\"lastModified\": \"2017-01-13T02:24:55.014Z\"" +
+        "}," +
+        "{" +
+          "\"url\": \"//img1.wsimg.com/isteam/stock/276ec650b3ac0016fb2602f8dd73cb27ea8d0bd82528f3053af0c2bb9491891d\"," +
+          "\"lastModified\": \"2017-01-21T16:59:46.173Z\"" +
+        "}," +
+        "{" +
+          "\"url\": \"//img1.wsimg.com/isteam/stock/b89f6dfb2b95e25b06fc7d0504fc918445774c4d7fa874aa972c3aca051df690\"," + 
+          "\"lastModified\": \"2017-01-21T16:59:46.173Z\"" +
+        "}," +
+        "{" +
+          "\"url\": \"//img1.wsimg.com/isteam/stock/4a351797d17301050ccccfae846b67f68dbcad0f62ca906a6e9477a7854cefb8\"," +
+          "\"lastModified\": \"2017-01-21T16:59:46.173Z\"" +
+        "}" +
+      "]," +
+      "\"stockPhotos\": []" +
+    "}," +
+    "\"webhooks\": {}," +
+    "\"planType\": \"business\"" +
+"}"
+
+DebugMessage(putPayload);
+
+BeginTransaction("PUT websites")
+wlHttp.Data["Type"] = "application/json";
+wlHttp.Data["Value"] = putPayload;
+wlHttp.Put("http://instantpage.api.test-godaddy.com/v2/websites/0f56d02e-a85d-4d10-908a-62646e09b906")  
+EndTransaction("PUT websites",WLSuccess,false)

@@ -1,0 +1,11 @@
+function InitAgenda()
+{
+	wlGlobals.FilterUrl = "http://dav7gcbuoinjg.cloudfront.net/javascripts/modal.js;lphbs.com;conviva.com;vimeocdn.com;getclicky.com;olark.com;shareyourcart.com;vimeo.com;yelpcdn.com;scorecardresearch.com;ytimg.com;youtube.com;addthis.com;googleapis.com;img.godaddy.com;wsimg.com;google.com;optimizely.com;google-analytics.com;facebook.com;twitter.com;fbcdn.com;twimg.com;gstatic.com;doubleclick.net;bluelithium.com;yieldmanager.com;yahoo.com;googleadservices.com;googletagmanager.com;truste.com;tiqcdn.com;facebook.net;reachlogicmedia.com;optorb.com;gwallet.com;adsrvr.org;p-td.com;adnxs.com;googleusercontent.com;fbcdn.net;spotxchange.com";
+	wlGlobals.UserAgent = "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.0; WOW64; Trident/5.0; BOIE9;ENUS)";
+}
+
+BeginTransaction("Hyfn_cloudfront") 
+wlHttp.Get("http://dav7gcbuoinjg.cloudfront.net/index.html")
+EndTransaction("Hyfn_cloudfront",WLSuccess,false)
+
+Sleep(1000);

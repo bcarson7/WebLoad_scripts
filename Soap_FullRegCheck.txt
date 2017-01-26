@@ -1,0 +1,46 @@
+function InitAgenda()
+{
+	wlGlobals.ElapsedRoundTime = 0;
+}
+
+myIndex = Math.floor(Math.random() * 10000)
+ 
+myCheckStr = "&lt;checkdata type=\"REG\" waittime=\"2500\" sourceCode=\"LoadTestRegistrar\" &gt;" +
+"&lt;domain name=\"TEST" + myIndex + ".com\" /&gt;" +
+"&lt;domain name=\"TEST" + myIndex + "the.com\" /&gt;" +
+"&lt;domain name=\"TEST" + myIndex + "site.com\" /&gt;" +
+"&lt;domain name=\"TEST" + myIndex + "my.com\" /&gt;" +
+"&lt;domain name=\"TEST" + myIndex + "online.com \" /&gt;" +
+"&lt;domain name=\"TEST" + myIndex + "new.com\" /&gt;" +
+"&lt;domain name=\"TEST" + myIndex + "store.com\" /&gt;" +
+"&lt;domain name=\"TEST" + myIndex + "free.com\" /&gt;" +
+"&lt;domain name=\"TEST" + myIndex + "now.com\" /&gt;" +
+"&lt;domain name=\"TEST" + myIndex + "best.com\" /&gt;" +
+"&lt;domain name=\"TEST" + myIndex + "blog.com\" /&gt;" +
+"&lt;domain name=\"TEST" + myIndex + "shop.com\" /&gt;" +
+"&lt;domain name=\"TEST" + myIndex + "today.com\" /&gt;" +
+"&lt;domain name=\"TEST" + myIndex + "jody.com\" /&gt;" +
+"&lt;/checkdata&gt;";
+
+soapRequest = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" + 
+						"<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">" + 
+							"<soap:Body>" + 
+								"<Check xmlns=\"http://tempuri.org/\">" + 
+									"<sCheckXML>" + 
+										myCheckStr + 
+									"</sCheckXML>" + 
+								"</Check>" + 
+							"</soap:Body>"  +
+						"</soap:Envelope>"
+
+wlGlobals.GetFrames = false
+wlHttp.Header["SOAPAction"] = "http://tempuri.org/Check"
+wlHttp.Data["Type"] = "text/xml;charset=UTF-8"
+wlHttp.Data["Value"] = soapRequest
+
+DebugMessage(soapRequest);
+
+BeginTransaction("m1pwregcheck09_FullCheck")
+wlHttp.Post("http://m1pwregcheck09/AvailCheckWebSvc/AvailCheckWebSvc.asmx")
+EndTransaction("m1pwregcheck09_FullCheck",WLSuccess,false)
+

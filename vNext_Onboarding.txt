@@ -1,0 +1,55 @@
+function InitAgenda()
+{
+	wlGlobals.SSLVersion="TLS_Version_1_1";
+	wlGlobals.SSLUseSNI = true;
+	InFile1 = CopyFile("\\\\g1lwweb001\\Software\\WebLoadProjects\\Data Files\\vNext_cats.txt");
+}
+
+function InitClient()
+{
+	wlInputFile1= new wlInputFile(InFile1)
+	wlInputFile1.Open(WLFileSequential, WLFileSharedNone, WLFilePerRound, WLFileStartOver, 1)
+}
+
+strGlobalInputFileLine = wlInputFile1.GetLine()
+KW = strGlobalInputFileLine[1]
+InfoMessage(KW);
+
+BeginTransaction("onboarding.test-godaddy.com")
+wlHttp.Get("https://onboarding.test-godaddy.com")
+EndTransaction("onboarding.test-godaddy.com",WLSuccess,false)
+ 
+BeginTransaction("POST Login")
+wlHttp.FormData["name"] = "robert.chen+40";
+wlHttp.FormData["password"] = "Salarium17";
+wlHttp.Post("https://sso.test-godaddy.com/v1/?path=%2F&app=onboarding&realm=idp&port=443")
+EndTransaction("POST Login",WLSuccess,false)
+
+BeginTransaction("GET categories")
+wlHttp.Get("https://categories.api.godaddy.com/v3/categories/en-US/trie")
+EndTransaction("GET categories",WLSuccess,false)
+
+BeginTransaction("POST category-input")
+wlHttp.Header["Referer"] = "https://onboarding.test-godaddy.com/collect/00001000-0010-0001-0001-000000100000"
+wlHttp.Data["Type"] = "application/json"
+wlHttp.Data["Value"] = "{\"str_id\":\"" + KW + "\", \"url\":\"https://d3.godaddy.com/api/v1/category-input/\",\"keywords\":[\"" + KW + "\"]}"
+wlHttp.Post("https://d3.godaddy.com/api/v1/category-input/")
+EndTransaction("POST category-input",WLSuccess,false)
+
+BeginTransaction("GET stockPhotos")
+wlHttp.Header["x-shopper-id"] = "308172"
+wlHttp.Header["Referer"] = "https://onboarding.test-godaddy.com/collect/00001000-0010-0001-0001-000000100000"
+wlHttp.FormdataEncodingType = 1
+wlHttp.FormData["businessCategory"] = KW;
+wlHttp.Get("https://instantpage.api.test-godaddy.com/v2/stockPhotos")
+EndTransaction("GET stockPhotos",WLSuccess,false)
+
+BeginTransaction("GET designs")
+wlHttp.Header["x-shopper-id"] = "308172"
+wlHttp.Header["Referer"] = "https://onboarding.test-godaddy.com/choose/00001000-0010-0001-0001-000000100000"
+wlHttp.EncodeFormdata = false; 
+wlHttp.FormData["vertical"] = KW;
+wlHttp.FormData["limit"] = "18"
+wlHttp.FormData["accountId"] = "00001000-0010-0001-0001-000000100000"
+wlHttp.Get("https://instantpage.api.test-godaddy.com/v2/designs")
+EndTransaction("GET designs",WLSuccess,false)

@@ -1,0 +1,109 @@
+function InitAgenda()
+{
+	wlGlobals.ElapsedRoundTime = 0;
+}
+
+BeginTransaction("manifest")
+{wlHttp.Get("https://help.securepaynet.net/helpme/manifest/wst_pagehelp") }	
+EndTransaction("manifest",WLSuccess,false)
+
+for (x=0; x<3; x++)
+{
+	random_site = wlRand.Range(1, 12)
+	
+	if (random_site == 1)
+	{ article3020() }
+
+	if (random_site == 2)
+	{ article2979() }
+	
+	if (random_site == 3)
+	{ article7714() }
+	
+	if (random_site == 4)
+	{ article7696() }
+	
+	if (random_site == 5)
+	{ article7686() }
+	
+	if (random_site == 6)
+	{ article7685() }
+	
+	if (random_site == 7)
+	{ article7673() }
+	
+	if (random_site == 8)
+	{ article7669() }
+	
+	if (random_site == 9)
+	{ article7665() }
+	
+	if (random_site == 10)
+	{ article3022() }
+	
+	if (random_site == 11)
+	{ article7679() }
+	
+	if (random_site == 12)
+	{ article7683() }
+}
+	
+	function article3020()
+	{ BeginTransaction("article3020")
+		{wlHttp.Get("https://help.securepaynet.net/helpme/article/3020?channel=wst_pagehelp&plabel=1") }	
+		EndTransaction("article3020",WLSuccess,false) }
+		
+	function article2979()
+	{ BeginTransaction("article2979")
+		{wlHttp.Get("https://help.securepaynet.net/helpme/article/2979?channel=wst_pagehelp&plabel=1") }	
+		EndTransaction("article2979",WLSuccess,false) }
+		
+	function article7714()
+	{ BeginTransaction("article7714")
+		{wlHttp.Get("https://help.securepaynet.net/helpme/article/7714?channel=wst_pagehelp&plabel=1") }	
+		EndTransaction("article7714",WLSuccess,false) }
+	
+	function article7696()
+	{ BeginTransaction("article7696")
+		{wlHttp.Get("https://help.securepaynet.net/helpme/article/7696?channel=wst_pagehelp&plabel=1") }	
+		EndTransaction("article7696",WLSuccess,false) }
+		
+	function article7686()
+	{ BeginTransaction("article7686")
+		{wlHttp.Get("https://help.securepaynet.net/helpme/article/7686?channel=wst_pagehelp&plabel=1") }	
+		EndTransaction("article7686",WLSuccess,false) }
+		
+	function article7685()
+	{ BeginTransaction("article7685")
+		{wlHttp.Get("https://help.securepaynet.net/helpme/article/7685?channel=wst_pagehelp&plabel=1") }	
+		EndTransaction("article7685",WLSuccess,false) }
+		
+	function article7673()
+	{ BeginTransaction("article7673")
+		{wlHttp.Get("https://help.securepaynet.net/helpme/article/7673?channel=wst_pagehelp&plabel=1") }	
+		EndTransaction("article7673",WLSuccess,false) }
+		
+	function article7669()
+	{ BeginTransaction("article7669")
+		{wlHttp.Get("https://help.securepaynet.net/helpme/article/7669?channel=wst_pagehelp&plabel=1") }	
+		EndTransaction("article7669",WLSuccess,false) }
+		
+	function article7665()
+	{ BeginTransaction("article7665")
+		{wlHttp.Get("https://help.securepaynet.net/helpme/article/7665?channel=wst_pagehelp&plabel=1") }	
+		EndTransaction("article7665",WLSuccess,false) }
+		
+	function article3022()
+	{ BeginTransaction("article3022")
+		{wlHttp.Get("https://help.securepaynet.net/helpme/article/3022?channel=wst_pagehelp&plabel=1") }	
+		EndTransaction("article3022",WLSuccess,false) }
+		
+	function article7679()
+	{ BeginTransaction("article7679")
+		{wlHttp.Get("https://help.securepaynet.net/helpme/article/7679?channel=wst_pagehelp&plabel=1") }	
+		EndTransaction("article7679",WLSuccess,false) }
+		
+	function article7683()
+	{ BeginTransaction("article7683")
+		{wlHttp.Get("https://help.securepaynet.net/helpme/article/7683?channel=wst_pagehelp&plabel=1") }	
+		EndTransaction("article7683",WLSuccess,false) }

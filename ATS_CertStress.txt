@@ -1,0 +1,59 @@
+function InitAgenda()
+{
+	wlGlobals.SleepRandomMin = 15000;
+	wlGlobals.SleepRandomMax = 30000;
+	wlGlobals.SSLVersion="TLS_Version_1_1";
+	wlGlobals.SSLUseSNI = true; 
+	wlGlobals.ElapsedRoundTime = 0;
+	InFile1 = CopyFile("\\\\g1lwweb001\\Software\\WebLoadProjects\\Data Files\\TwentyThousand.txt")
+	InFile2 = CopyFile("\\\\g1lwweb001\\Software\\WebLoadProjects\\Data Files\\TwoThousand.");
+}
+
+function InitClient()
+{
+	wlInputFile1= new wlInputFile(InFile1);
+	wlInputFile1.Open(WLFileRandom, WLFileSharedNone, WLFilePerRound, WLFileStartOver, 1);
+	wlInputFile2= new wlInputFile(InFile2);
+	wlInputFile2.Open(WLFileRandom, WLFileSharedNone, WLFilePerRound, WLFileStartOver, 1);
+}
+
+random_domain = wlRand.Range(1, 10)
+if (random_domain < 10)
+{ 
+	heavy() 
+}
+
+if (random_domain == 10)
+{ 
+	light()
+}
+
+function heavy() //10% sites get 90% of load
+{
+	strGlobalInputFileLine = wlInputFile1.GetLine();
+	HostingURL = strGlobalInputFileLine[1];
+		
+	BeginTransaction("Cert_Heavy")
+	wlHttp.Get("https://www.test" + HostingURL + ".com/nocache/10/cacheid")
+	EndTransaction("Cert_Heavy",WLSuccess,false)
+}
+
+function light() //90% sites get 10% of load
+{
+	strGlobalInputFileLine = wlInputFile2.GetLine();
+	HostingURL = strGlobalInputFileLine[1];
+		
+	BeginTransaction("Cert_Light")
+	wlHttp.Get("https://www.test" + HostingURL + ".com/nocache/10/cacheid")
+	EndTransaction("Cert_Light",WLSuccess,false)
+}
+
+//If not using 90%/10% weighting above then use this code
+strGlobalInputFileLine = wlInputFile1.GetLine();
+HostingURL = strGlobalInputFileLine[1];
+		
+BeginTransaction("All Certs")
+wlHttp.Get("https://www.test" + HostingURL + ".com/nocache/10/cacheid")
+EndTransaction("All Certs",WLSuccess,false)
+
+Sleep(1000);

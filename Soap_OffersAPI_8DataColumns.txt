@@ -1,0 +1,179 @@
+function InitAgenda()
+{
+	wlGlobals.ElapsedRoundTime = 0;
+	//wlGlobals.RecvBufferSize = 100000;  //100000 per Radview
+	InFile1 = CopyFile("C:\\Users\\bcarson\\Documents\\WebLOAD\\projects\\Fastball\\Data\\OffersAPI.dat");
+}
+
+function InitClient()
+{
+	wlInputFile1= new wlInputFile(InFile1)
+	wlInputFile1.Open(WLFileSequential, WLFileSharedNone, WLFilePerRound, WLFileStartOver, 1)  //WLParamStopVC Random
+}
+
+strGlobalInputFileLine = wlInputFile1.GetLine()
+Method = strGlobalInputFileLine[1]
+AppID = strGlobalInputFileLine[2]
+Placement = strGlobalInputFileLine[3]
+PrivateLabelID = strGlobalInputFileLine[4]
+Shopper = strGlobalInputFileLine[5]
+ISC = strGlobalInputFileLine[6]
+DisplayCurrency = strGlobalInputFileLine[7]
+TransactionalCurrency = strGlobalInputFileLine[8]
+
+var AppID; var Placement; var PrivateLabelID; var Shopper; var ISC; var DisplayCurrency; var TransactionalCurrency;
+
+if (Method == "GetOffersAndMessageData")
+{		
+	XMLStr = "[SOAP_ACTION]\"#fastball.offersapi/GetOffersAndMessageData\"";
+	XMLStr += "[REQUEST_XML]<GetOffersAndMessageData xmlns=\"#fastball.offersapi\">";
+	
+	XMLStr = "\"<GetOffersAndMessageData xmlns=\"#fastball.offersapi\">";	
+  	XMLStr += "<ChannelRequestXml>";
+	
+	if (AppID != "") 
+   	XMLStr += "&lt;RequestXml&gt;&lt;ClientData AppID=\"" + AppID + "\"";
+	if (Placement != "")
+   	XMLStr += " Placement=\"" + Placement + "\"";
+	XMLStr += "/&gt;&lt;/RequestXml&gt;"; 
+	XMLStr += "</ChannelRequestXml>";
+	
+	XMLStr += "<CandidateRequestXml>"
+	XMLStr += "&lt;CandidateData"
+	if (PrivateLabelID != "")
+	XMLStr +=  " PrivateLabelID=\"" + PrivateLabelID + "\"";
+	if (Shopper != "")
+   	XMLStr +=  " ShopperID =\"" + Shopper + "\"";
+	if (ISC != "")
+   	XMLStr += " ISC=\"" + ISC + "\"";
+	if (DisplayCurrency  != "") 
+   	XMLStr += " DisplayCurrency=\"" + DisplayCurrency + "\"";
+	if (TransactionalCurrency  != "") 
+   	XMLStr += " TransactionalCurrency=\"" + TransactionalCurrency + "\"";   
+	XMLStr += "/&gt;";
+	XMLStr += "</CandidateRequestXml>";
+	XMLStr += "</GetOffersAndMessageData>";
+	
+	SoapRequest = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" + 
+      "<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">" +
+  		"<soap:Body>" 
+  			+ XMLStr +
+ 		"</soap:Body>" +
+"</soap:Envelope>"
+
+wlGlobals.GetFrames = false;
+
+wlHttp.Header["SOAPAction"] = "#fastball.offersapi/GetOffersAndMessageData"
+wlHttp.Data["Type"] = "text/xml;charset=UTF-8"
+
+wlHttp.Data["Value"] = SoapRequest;
+
+BeginTransaction("GetOffersAndMessageData")
+wlHttp.Post("http://fastball.loadtest.glbt1.gdg/offersapi/service.asmx")
+EndTransaction("GetOffersAndMessageData",WLSuccess,false)
+}
+
+if (Method == "GetOffersAndMessageDataWithSubLocations")
+{
+	XMLStr = "[SOAP_ACTION]\"#fastball.offersapi/GetOffers\"";
+	XMLStr += "[REQUEST_XML]<GetOffers xmlns=\"#fastball.offersapi\">";
+	
+	XMLStr =  "\"<GetOffersAndMessageDataWithSubLocations xmlns=\"#fastball.offersapi\">";
+ 	XMLStr += "<ChannelRequestXml>";
+		
+	if (AppID != "") 
+   	XMLStr += "&lt;RequestXml&gt;&lt;ClientData AppID=\"" + AppID + "\"";
+	if (Placement != "")
+   	XMLStr += " Placement=\"" + Placement + "\"";
+	XMLStr += "/&gt;&lt;/RequestXml&gt;"; 
+	XMLStr += "</ChannelRequestXml>";
+	
+	XMLStr +="<CandidateRequestXml>"
+	XMLStr +="&lt;CandidateData"
+	if (PrivateLabelID != "")
+	XMLStr +=  " PrivateLabelID=\"" + PrivateLabelID + "\"";
+	if (Shopper != "")
+   	XMLStr +=  " ShopperID =\"" + Shopper + "\"";
+	if (ISC != "")
+   	XMLStr += " ISC=\"" + ISC + "\"";
+	if (DisplayCurrency  != "") 
+   	XMLStr += " DisplayCurrency=\"" + DisplayCurrency + "\"";
+	if (TransactionalCurrency  != "") 
+   	XMLStr += " TransactionalCurrency=\"" + TransactionalCurrency + "\"";   
+	XMLStr += "/&gt;";
+	XMLStr += "</CandidateRequestXml>";
+	XMLStr += "</GetOffersAndMessageDataWithSubLocations>";
+
+SoapRequest = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" + 
+      "<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">" +
+  		"<soap:Body>" 
+  			+ XMLStr +
+ 		"</soap:Body>" +
+"</soap:Envelope>"
+
+wlGlobals.GetFrames = false;
+
+wlHttp.Header["SOAPAction"] = "#fastball.offersapi/GetOffersAndMessageDataWithSubLocations"
+                                               "#fastball.offersapi/GetOffersAndMessageDataWithSubLocations"
+
+wlHttp.Data["Type"] = "text/xml;charset=UTF-8"
+
+wlHttp.Data["Value"] = SoapRequest;
+
+//Sleep(1000);
+
+BeginTransaction("GetOffersAndMessageDataWithSubLocations")
+
+wlHttp.Post("http://fastball.loadtest.glbt1.gdg/offersapi/service.asmx")
+
+EndTransaction("GetOffersAndMessageDataWithSubLocations",WLSuccess,false)
+}
+
+if (Method == "GetOffers")
+{
+	XMLStr = "[SOAP_ACTION]\"#fastball.offersapi/GetOffers\"";
+	XMLStr += "[REQUEST_XML]<GetOffers xmlns=\"#fastball.offersapi\">";
+	
+	XMLStr =  "\"<GetOffers xmlns=\"#fastball.offersapi\">";
+ 	XMLStr += "<ChannelRequestXml>";
+		
+	if (AppID != "") 
+   	XMLStr += "&lt;RequestXml&gt;&lt;ClientData AppID=\"" + AppID + "\"";
+	if (Placement != "")
+   	XMLStr += " Placement=\"" + Placement + "\"";
+	XMLStr += "/&gt;&lt;/RequestXml&gt;"; 
+	XMLStr += "</ChannelRequestXml>";
+	
+	XMLStr +="<CandidateRequestXml>"
+	XMLStr +="&lt;CandidateData"
+	if (PrivateLabelID != "")
+	XMLStr +=  " PrivateLabelID=\"" + PrivateLabelID + "\"";
+	if (Shopper != "")
+   	XMLStr +=  " ShopperID =\"" + Shopper + "\"";
+	if (ISC != "")
+   	XMLStr += " ISC=\"" + ISC + "\"";
+	if (DisplayCurrency  != "") 
+   	XMLStr += " DisplayCurrency=\"" + DisplayCurrency + "\"";
+	if (TransactionalCurrency  != "") 
+   	XMLStr += " TransactionalCurrency=\"" + TransactionalCurrency + "\"";   
+	XMLStr += "/&gt;";
+	XMLStr += "</CandidateRequestXml>";
+	XMLStr += "</GetOffers>";
+
+	SoapRequest = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" + 
+      "<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">" +
+  		"<soap:Body>" 
+  			+ XMLStr +
+ 		"</soap:Body>" +
+		"</soap:Envelope>"
+
+	wlGlobals.GetFrames = false;
+	wlHttp.Header["SOAPAction"] = "#fastball.offersapi/GetOffers"
+	wlHttp.Data["Type"] = "text/xml;charset=UTF-8"
+	wlHttp.Data["Value"] = SoapRequest;
+
+	BeginTransaction("GetOffers")
+	wlHttp.Post("http://fastball.loadtest.glbt1.gdg/offersapi/service.asmx")
+	EndTransaction("GetOffers",WLSuccess,false)
+}
+

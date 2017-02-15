@@ -1,0 +1,116 @@
+function InitAgenda()
+{
+
+//InFile1 = CopyFile("\\\\g1lwweb001\\Software\\WebLoadProjects\\Data Files\\arista-api.txt");
+}
+function InitClient()
+{
+//wlInputFile1 = new wlInputFile(InFile1);
+//wlInputFile1.Open(WLFileSequential, WLFileSharedNone, WLFilePerRound, WLFileStartOver, 1);
+}
+/***** WLIDE - JavaScript - ID:11 *****/
+//strGlobalInputFileLine = wlInputFile1.GetLine();
+//show = strGlobalInputFileLine[1];
+// END WLIDE
+
+/***** WLIDE - JavaScript - ID:23 *****/
+wlHttp.ContentType = "application/json, text/json"
+wlHttp.AcceptEncodingGzip="gzip,deflate,sdch"
+wlHttp.AcceptLanguage="en-US,en;q=0.8"
+wlHttp.Data.Type = "application/json; charset=utf-8"
+// END WLIDE
+
+/***** WLIDE - JavaScript - ID:26 *****/
+random_site = wlRand.Range(1, 7)
+	
+if (random_site == 1)
+{ clock() }
+
+if (random_site == 2)
+{ interfaces() }
+	
+if (random_site == 3)
+{ inventory() }
+	
+if (random_site == 4)
+{ mac() }
+
+if (random_site == 5)
+{ config() }
+	
+if (random_site == 6)
+{ version() }
+
+if (random_site == 7)
+{ neighbors() }
+
+function clock()
+{
+BeginTransaction("show clock")
+showPost = "{ \"jsonrpc\": \"2.0\", \"method\": \"runCmds\", \"params\": { \"format\": \"text\", \"timestamps\": false, \"cmds\": [\"show clock\"], \"version\": 1}, \"id\": \"EapiExplorer-1\" }"
+wlHttp.Data.Value=showPost;
+//wlHttp.Post("https://10.250.24.60/command-api")
+wlHttp.Post("https://10.250.24.61/command-api")
+EndTransaction("show clock",WLSuccess,false)
+}
+
+function interfaces()
+{
+BeginTransaction("show interfaces")
+showPost = "{ \"jsonrpc\": \"2.0\", \"method\": \"runCmds\", \"params\": { \"format\": \"json\", \"timestamps\": false, \"cmds\": [\"show interfaces\"], \"version\": 1}, \"id\": \"EapiExplorer-1\" }"
+wlHttp.Data.Value=showPost;
+//wlHttp.Post("https://10.250.24.60/command-api")
+wlHttp.Post("https://10.250.24.61/command-api")
+EndTransaction("show interfaces",WLSuccess,false)
+}
+
+function inventory()
+{
+BeginTransaction("show inventory")
+showPost = "{ \"jsonrpc\": \"2.0\", \"method\": \"runCmds\", \"params\": { \"format\": \"json\", \"timestamps\": false, \"cmds\": [\"show inventory\"], \"version\": 1}, \"id\": \"EapiExplorer-1\" }"
+wlHttp.Data.Value=showPost;
+//wlHttp.Post("https://10.250.24.60/command-api")
+wlHttp.Post("https://10.250.24.61/command-api")
+EndTransaction("show inventory",WLSuccess,false)
+}
+
+function mac()
+{
+BeginTransaction("show mac address-table")
+showPost = "{ \"jsonrpc\": \"2.0\", \"method\": \"runCmds\", \"params\": { \"format\": \"json\", \"timestamps\": false, \"cmds\": [\"show mac address-table\"], \"version\": 1}, \"id\": \"EapiExplorer-1\" }"
+wlHttp.Data.Value=showPost;
+//wlHttp.Post("https://10.250.24.60/command-api")
+wlHttp.Post("https://10.250.24.61/command-api")
+EndTransaction("show mac address-table",WLSuccess,false)
+}
+
+function config()
+{
+BeginTransaction("show running-config")
+showPost =  "{ \"jsonrpc\": \"2.0\", \"method\": \"runCmds\", \"params\": { \"format\": \"json\", \"timestamps\": false, \"cmds\": [{\"cmd\": \"enable\", \"input\": \"cisco\" }, \"show running-config\"], \"version\": 1 }, \"id\": \"EapiExplorer-1\"}"
+wlHttp.Data.Value=showPost;
+//wlHttp.Post("https://10.250.24.60/command-api")
+wlHttp.Post("https://10.250.24.61/command-api")
+EndTransaction("show running-config",WLSuccess,false)
+}
+
+function version()
+{
+BeginTransaction("show version")
+showPost = "{ \"jsonrpc\": \"2.0\", \"method\": \"runCmds\", \"params\": { \"format\": \"json\", \"timestamps\": false, \"cmds\": [\"show version\"], \"version\": 1}, \"id\": \"EapiExplorer-1\" }"
+wlHttp.Data.Value=showPost;
+//wlHttp.Post("https://10.250.24.60/command-api")
+wlHttp.Post("https://10.250.24.61/command-api")
+EndTransaction("show version",WLSuccess,false)
+}
+
+function neighbors()
+{
+BeginTransaction("show lldp neighbors")
+showPost = "{ \"jsonrpc\": \"2.0\", \"method\": \"runCmds\", \"params\": { \"format\": \"json\", \"timestamps\": false, \"cmds\": [\"show lldp neighbors\"], \"version\": 1}, \"id\": \"EapiExplorer-1\" }"
+wlHttp.Data.Value=showPost;
+//wlHttp.Post("https://10.250.24.60/command-api")
+wlHttp.Post("https://10.250.24.61/command-api")
+EndTransaction("show lldp neighbors",WLSuccess,false)
+}
+

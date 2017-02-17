@@ -1,0 +1,37 @@
+function InitAgenda()
+{
+  InFile1 = CopyFile("\\\\g1lwweb001\\Software\\WebLoadProjects\\Data Files\\integer_64k.txt");
+}
+
+function InitClient()
+{
+  wlInputFile1 = new wlInputFile(InFile1);
+	wlInputFile1.Open(WLFileSequential, WLFileSharedNone, WLFilePerRound, WLFileStartOver, 1);
+}
+
+strGlobalInputFileLine = wlInputFile1.GetLine();
+iterate = strGlobalInputFileLine[1];
+
+BeginTransaction("GET object")
+wlHttp.Header["X-Security-User"] = "btables";
+wlHttp.Header["X-Security-Group"] = "2a59b6e66ff0fe40a01fcf164b3ee487";
+wlHttp.Get("https://gdl.int.test-godaddy.com/v1/MonitoringTestLocker/MonitoringTestDirectory/MonitoringTestObject")
+EndTransaction("GET object",WLSuccess,false)
+
+BeginTransaction("PUT object")
+wlHttp.Header["X-Security-User"] = "btables";
+wlHttp.Header["X-Security-Group"] = "2a59b6e66ff0fe40a01fcf164b3ee487";
+wlHttp.Put("https://gdl.int.test-godaddy.com/v1/MonitoringTestLocker/MonitoringTestDirectory/TestObject" + iterate)
+EndTransaction("PUT object",WLSuccess,false)
+
+BeginTransaction("GET locker")
+wlHttp.Header["X-Security-User"] = "btables";
+wlHttp.Header["X-Security-Group"] = "2a59b6e66ff0fe40a01fcf164b3ee487";
+wlHttp.Get("https://gdl.int.test-godaddy.com/v1/MonitoringTestLocker")
+EndTransaction("GET locker",WLSuccess,false)
+
+BeginTransaction("GET lockers")
+wlHttp.Header["X-Security-User"] = "btables";
+wlHttp.Header["X-Security-Group"] = "2a59b6e66ff0fe40a01fcf164b3ee487";
+wlHttp.Get("https://gdl.int.test-godaddy.com/v1")
+EndTransaction("GET lockers",WLSuccess,false)

@@ -1,0 +1,25 @@
+var nval = 1;
+
+while(1)
+{
+	BeginTransaction("Increase docrootmap")
+	wlHttp.Get(" http://172.19.107.160/index.php?n=10")
+	nval +=10;
+	//DebugMessage(nval);
+	EndTransaction("Increase docrootmap",WLSuccess,false)*/
+
+	BeginTransaction("GET docrootmap")
+	wlHttp.SaveSource = true;
+	wlHttp.Get("http://b87.0a0.myftpupload.com/")
+	Results = extractValue( "<pre>", "<\/pre>",document.wlSource);
+
+	while(Results=="pageok")
+				{
+						//wlHttp.Get("http://b87.0a0.myftpupload.com/")
+						wlHttp.Get("http://google.com/");
+						//wlHttp.Get("http://testsite/" + nval + ".com")
+						Results = extractValue( "<pre>", "<\/pre>",document.wlSource);
+						Sleep(50);
+				}
+		EndTransaction("GET docrootmap",WLSuccess,false)
+}

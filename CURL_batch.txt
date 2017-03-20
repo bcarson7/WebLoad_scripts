@@ -1,0 +1,1 @@
+"C:\Program Files (x86)\cURL\bin\curl" -k --cert c:\certs\login.dev.client.int.godaddy.com.pem https://sso.test.int.godaddy.com/secure/api/token --data "username=authtest&password=P@55w0rd%%2B"

@@ -1,0 +1,10 @@
+@echo off
+date /t
+time /t
+echo Load test executing...
+For /f "tokens=2-4 delims=/ " %%a in ('date /t') do (set mydate=%%c-%%a-%%b)
+For /f "tokens=1-2 delims=/:" %%a in ("%TIME%") do (set mytime=%%a%%b)
+set TargetFolder=\\g1lwweb001\Software\WebLoadProjects\Hosting\AltApache
+webload %TargetFolder%\Templates\Apache_PMM_10vu_5min.tpl %TargetFolder%\Sessions\Apache_PMM_10vu_5min_%mydate%_%mytime%.ls /ar 30
+WLAnalyticsCmd -m U -p "Summary Portfolio" -ls "%TargetFolder%\Sessions\Apache_PMM_10vu_5min_%mydate%_%mytime%.ls" -f PDF -l "%TargetFolder%\Jenkins" -n "Apache_PMM_10vu_5min_%mydate%_%mytime%"
+pause

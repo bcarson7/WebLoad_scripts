@@ -6,7 +6,7 @@ function InitAgenda()
 function InitClient()
 {
   wlInputFile1 = new wlInputFile(InFile1);
-	wlInputFile1.Open(WLFileSequential, WLFileSharedNone, WLFilePerRound, WLFileStartOver, 1);
+  wlInputFile1.Open(WLFileSequential, WLFileSharedNone, WLFilePerRound, WLFileStartOver, 1);
 }
 
 strGlobalInputFileLine = wlInputFile1.GetLine();

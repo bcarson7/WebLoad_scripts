@@ -69,6 +69,5 @@ wlGlobals.UserAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKi
 Extract ID from returned source
 wlHttp.SaveSource = true;
 wlHttp.Post("https://pro.test-godaddy.com/api/v1/shared_shopping/shopping_lists")
-DS = document.wlSource;
-ID = extractValue("https://pro.test-godaddy.com/shared_shopping/shopping_list/", "/accept", DS)
+ID = extractValue("https://pro.test-godaddy.com/shared_shopping/shopping_list/", "/accept", document.wlSource)
 wlHttp.Delete("https://pro.test-godaddy.com/api/v1/shared_shopping/shopping_lists/" + ID)

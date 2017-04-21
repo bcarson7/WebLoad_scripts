@@ -65,3 +65,6 @@ Using a Specific User Agent
 wlGlobals.UserAgent = "Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A405 Safari/8536.25"
 wlGlobals.UserAgent = "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.0; WOW64; Trident/5.0; BOIE9;ENUS)";
 wlGlobals.UserAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1309.0 Safari/537.17";
+
+Extract
+SL = extractValue("https://pro.test-godaddy.com/shared_shopping/shopping_list/", "/accept", "https://pro.test-godaddy.com/shared_shopping/shopping_list/4555/accept")

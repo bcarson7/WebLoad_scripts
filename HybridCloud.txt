@@ -1,0 +1,25 @@
+function InitAgenda()
+{
+//wlGlobals.ElapsedRoundTime = 0;
+InFile1 = CopyFile("\\\\g1lwweb001\\Software\\WebLoadProjects\\Data Files\\silvas.txt");
+}
+function InitClient()
+
+{
+wlInputFile1= new wlInputFile(InFile1);
+//This will allow multiple VUs to iterate through datafile without repeating any rows
+wlInputFile1.Open(WLFileSequential, WLParamGlobalLocked, WLParamUpdateRound, WLParamStopVC, 1);
+}
+
+//InfoMessage("Unique request no. " + GlobalCounter.getValue())
+//InfoMessage(TimeStamp);
+
+strGlobalInputFileLine = wlInputFile1.GetLine();
+img_x = strGlobalInputFileLine[1];
+img_y = strGlobalInputFileLine[2];
+
+//http://isteam.wsimg.com/ip/static/steam-engine.jpg/:/rs=w:2000,h:2000
+	
+BeginTransaction(img_y)
+wlHttp.Get("http://isteam.wsimg.com/ip/static/steam-engine.jpg/:/rs=w:" + img_x + ",h:" + img_y);
+EndTransaction(img_y,WLSuccess,false)
